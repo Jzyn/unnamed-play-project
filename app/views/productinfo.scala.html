@@ -2,22 +2,19 @@
 @import helper._
 
 @main("Product Info",user) {
+<div class="container">
 
-<div class="col-sm-3">
-</div>
-<div class="col-sm-6" id="productInfoWrapper">
 
-    <div id="productInfoHeader" id="TextAlignCenter">
+   
         <h3>@selectedProduct.getName()</h3>
-    </div>
-    <div id="productInfoBody">
-        <div class="row">
-            <div class="col-sm-4">
+   
+
                 <pre id="FloatLeft"><span id="textLightRed">PRICE :</span> @selectedProduct.getPrice()</pre>
                 @helper.form(action = routes.UserController.bidSubmit()) {
                 <form>
                     <div class="form-group">
-                        @inputText(listProductForm("price"),  'class -> "form-control",  'placeholder ->"Place a bid")
+                        @helper.inputText(listProductForm("price"),  'class -> "form-control",  'placeholder ->"Place a bid")
+			
                     </div>
                     <input type="submit" value="Submit Bid" class="btn" id="Buttons">
                 </form>
@@ -31,7 +28,7 @@
 
 
 
-            <div class="col-sm-6">
+           
 
 
                 <h4 class="page-header TextAlignCenter">About Product</h4>
@@ -39,20 +36,6 @@
                 <pre id="FloatLeft"><span id="textLightRed">CATEGORY : </span>@selectedProduct.printCatList()</pre>
 
 
-
-
-
-            </div>
-            <!---EndOfRow--->
-        </div>
-    </div>
-
-
-
-
-
-</div>
-<div class="col-sm-3">
 </div>
 
 

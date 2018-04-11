@@ -1,3 +1,15 @@
 .under-logo{
  margin: 15px;
 }
+
+
+.flexContainer {
+    display: flex;
+}
+
+.inputField {
+    flex: 1;
+}
+
+#search{
+border: 1px solid black;
