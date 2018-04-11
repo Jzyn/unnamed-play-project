@@ -6,6 +6,7 @@
 GET     /                           controllers.HomeController.index
 GET     /profile                    controllers.UserController.profile
 GET     /products                   controllers.HomeController.products(cat:Long ?=0L,filter?="")
+GET	    /productInfo	            controllers.HomeController.productInfo(prodID:Long ?=0L)
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -30,3 +31,5 @@ POST    /signUpSubmit                       controllers.HomeController.signupSub
 
 GET     /user/listproduct                   controllers.UserController.listProduct
 POST    /user/productSubmit                 controllers.UserController.productSubmit
+
+POST   /user/bid                            controllers.UserController.bidSubmit

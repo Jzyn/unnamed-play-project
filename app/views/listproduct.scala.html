@@ -7,6 +7,23 @@
 <div class="container">
     @helper.form(action = routes.UserController.productSubmit()) {
 <form>
+    <!-- Image upload input -->
+    <div class="container-fluid">
+        <div class="row">
+            <label>Image</label>
+        </div>
+        <div class="row">
+            @if(env.resource("public/images/productImages/thumbnails/" + listProductForm("id").value() + ".jpg").isDefined) {
+            <p><img src="/assets/images/productImages/thumbnails/@(listProductForm("id").value() + ".jpg")"/></p>
+            } else {
+            <p><img src="/assets/images/productImages/thumbnails/noImage.png"/></p>
+            }
+        </div>
+        <div class="row">
+            <input class="btn-sm btn-default" type="file" name="upload">
+        </div>
+    </div>
+
 <div class="form-group">
     @inputText(listProductForm("name"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: Unopened original Avengers Comic")
 </div>

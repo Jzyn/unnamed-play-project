@@ -106,4 +106,20 @@ public class HomeController extends Controller {
       	  return ok(products.render(catId,filter,productsList, categoriesList, getUserFromSession(), env));
    	 }
 
+    public Result productInfo(Long prodId)
+    {
+
+        try
+        {
+            Form<Product> listProductForm = formFactory.form(Product.class).bindFromRequest();
+            Product selectedProd = Product.find.byId(prodId);
+            User currentUser = getUserFromSession();
+            return ok(productinfo.render(listProductForm,selectedProd,currentUser,env));
+        } catch(Exception ex)
+        {
+            flash("exception","Uh Oh Something unexpected happened");
+            return redirect(routes.HomeController.index());
+        }
+    }
+
 }
