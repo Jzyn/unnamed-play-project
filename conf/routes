@@ -32,4 +32,4 @@ POST    /signUpSubmit                       controllers.HomeController.signupSub
 GET     /user/listproduct                   controllers.UserController.listProduct
 POST    /user/productSubmit                 controllers.UserController.productSubmit
 
-POST   /user/bid                            controllers.UserController.bidSubmit
+POST   /user/bid                            controllers.UserController.bidSubmit(prodID:Long ?=0L)

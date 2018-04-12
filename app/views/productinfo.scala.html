@@ -9,16 +9,16 @@
         <h3>@selectedProduct.getName()</h3>
    
 
-                <pre id="FloatLeft"><span id="textLightRed">PRICE :</span> @selectedProduct.getPrice()</pre>
-                @helper.form(action = routes.UserController.bidSubmit()) {
+                <pre id="FloatLeft"><span id="textLightRed">PRICE :</span> @selectedProduct.getPrice() | <span id="textLightRed">Current Max Bidder :</span> @selectedProduct.getSeller() </pre>
+		
+                @helper.form(action = routes.UserController.bidSubmit(selectedProduct.getId())) {
                 <form>
-                    <div class="form-group">
-                        @helper.inputText(listProductForm("price"),  'class -> "form-control",  'placeholder ->"Place a bid")
-			
-                    </div>
-                    <input type="submit" value="Submit Bid" class="btn" id="Buttons">
+                    <button type="submit" class="btn btn-light" id="search">
+                     Up the Ante by €5 
+		    </button>
                 </form>
                 }
+
                 @if(env.resource("public/images/productImages/"+selectedProduct.getId()+".jpg").isDefined) {
                 <img src="/assets/images/productImages/@(selectedProduct.getId() +".jpg")" class="img-responsive img-rounded" alt="Image of Product/Manga/Anime.">
                 } else {

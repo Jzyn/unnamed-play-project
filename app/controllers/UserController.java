@@ -78,7 +78,7 @@ public class UserController extends Controller {
             Product p = listProductForm.get();
 
             if (p.getId() == null) {
-                // Save to the database via Ebean (remember Product extends Model)
+                // Save to the database via Ebean0.0 (remember Product extends Model)
                 p.setSeller(getUserFromSession().getUsername());
                 p.save();
             }
@@ -108,33 +108,34 @@ public class UserController extends Controller {
     }
 
     @Transactional
-    public Result bidSubmit() {
-
+    public Result bidSubmit(Long id) {
 
         try {
+             Product p;
+             Form<Product> bidForm;
+             p = Product.find.byId(id);
+            User u = getUserFromSession();
 
-
-            Form<Product> listProductForm = formFactory.form(Product.class).bindFromRequest();
-            Product p = listProductForm.get();
-
-
-            if(p.getPrice() > 15)
-            {
-                p.update();
-            }
-            else
-            {
-                flash("Whoops!, Bid too low");
-            }
+            // Create a form based on the Room class and fill using r
+            bidForm = formFactory.form(Product.class).fill(p);
+            if(p.getPrice() <= 160){
+	    p.setPrice(p.getPrice() + 5);
+	    p.update();
 
             return redirect(routes.HomeController.productInfo(p.getId()));
-
-        } catch (Exception ex) {
-            flash("exception","Uh Oh Looks like something went wrong press back to get out of here.");
-            return redirect(routes.HomeController.products(0, ""));
+}
+else{
+flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
+return redirect(routes.HomeController.productInfo(p.getId()));
+}
+            } catch (Exception ex) {
+                // Display an error message or page
+                return badRequest("error");
         }
 
+       
     }
+
 
     // Save an image file
     public String saveFile(Long id,FilePart<File> image) {
