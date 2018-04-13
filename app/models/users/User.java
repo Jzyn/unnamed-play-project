@@ -10,7 +10,14 @@ import play.Logger;
 
 // Product Entity managed by the ORM
 @Entity
-
+// specify mapped table name
+@Table(name = "user")
+// Map inherited classes to a single table
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+// Discriminator column used to define user type
+@DiscriminatorColumn(name = "role")
+// This user type is user
+@DiscriminatorValue("user")
 public class User extends Model {
 
 
@@ -26,7 +33,7 @@ public class User extends Model {
     @Constraints.Required
     private String password;
 
-    @Constraints.Required
+    @Column(insertable=false, updatable=false)
     private String role;
 
    

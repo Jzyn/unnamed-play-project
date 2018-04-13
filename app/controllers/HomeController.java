@@ -54,37 +54,35 @@ public class HomeController extends Controller {
     public Result signUp() {
         Form<User> signUpForm = formFactory.form(User.class);
 
-        return ok(signup.render(signUpForm, User.getUserById(session().get("email"))));
+        return ok(signup.render(signUpForm, getUserFromSession()));
     }
 
     public Result signupSubmit() {
 
-        Form<User> signUpForm = formFactory.form(User.class).bindFromRequest();
+    Form<User> newUserForm = formFactory.form(User.class).bindFromRequest();
 
-        // Check for errors
-        if(signUpForm.hasErrors()) {
-            // Display the form again
-            return badRequest(signup.render(signUpForm, getUserFromSession()));
+	if(newUserForm.hasErrors()){
+
+	return badRequest(signup.render(newUserForm, getUserFromSession()));
+	}
+
+	User newUser = newUserForm.get();
+        if (newUser.getEmail() == null) {
+            // Save to the database via Ebean (remember Product extends Model)
+            newUser.setRole("user");
+            newUser.save();
+	    flash("Success", "You have been registered. You can now Login.");
+        }
+        // Product already exists so update
+        else if (newUser.getEmail() != null) {
+            newUser.update();
         }
 
-        User u = signUpForm.get();
+	return redirect(controllers.routes.HomeController.index());
 
-        if(u.getEmail().equals(User.find.ref(u.getEmail()))){
-            flash("Email already exists");
-            return redirect(routes.HomeController.signUp());
+}
 
-        }
 
-        u.setRole("user");
-        u.save();
-
-        // Set a success message in temporary flash
-        // for display in return view
-        flash("success, Account Created");
-
-        // Redirect to home
-        return redirect(routes.HomeController.index());
-    }
 
 
 	public Result products(Long catId,String filter) {

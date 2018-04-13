@@ -10,18 +10,11 @@
     <!-- Image upload input -->
     <div class="container-fluid">
         <div class="row">
-            <label>Image</label>
+		<label>Image upload</label>
+                     <input class = "btn-sm btn-default" type="file" name="upload">
+                <label>Image</label>
         </div>
-        <div class="row">
-            @if(env.resource("public/images/productImages/thumbnails/" + listProductForm("id").value() + ".jpg").isDefined) {
-            <p><img src="/assets/images/productImages/thumbnails/@(listProductForm("id").value() + ".jpg")"/></p>
-            } else {
-            <p><img src="/assets/images/productImages/thumbnails/noImage.png"/></p>
-            }
-        </div>
-        <div class="row">
-            <input class="btn-sm btn-default" type="file" name="upload">
-        </div>
+
     </div>
 
 <div class="form-group">

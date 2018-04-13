@@ -8,32 +8,30 @@
 <form>
     <div class="form-row">
         <div class="form-group col-md-6">
-     @inputText(signUpForm("email"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
+             @inputText(signUpForm("email"),  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-    @inputPassword(signUpForm("password"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
+   	     @inputPassword(signUpForm("password"),  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-   @inputText(signUpForm("name"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
+  	     @inputText(signUpForm("name"),  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-    @inputText(signUpForm("username"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
+  	     @inputText(signUpForm("username"),  'class -> "form-control", 'label -> "Email Address")
         </div>
-    </div>
-    <div class="form-group">
-   @inputText(signUpForm("address1"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
-    </div>
-    <div class="form-group">
-  @inputText(signUpForm("address2"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
-    </div>
-    <div class="form-row">
         <div class="form-group col-md-6">
-             @inputText(signUpForm("city"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"examplecom")
+  	     @inputText(signUpForm("address1"),  'class -> "form-control", 'label -> "Email Address")
         </div>
-        @inputText(signUpForm("role"), '_label -> "", 'hidden -> "hidden")
-    </div>
-    <button type="submit" class="btn btn-primary">Sign up</button>
+        <div class="form-group col-md-6">
+ 	     @inputText(signUpForm("address2"),  'class -> "form-control", 'label -> "Email Address")
+        </div>
+        <div class="form-group col-md-6">
+             @inputText(signUpForm("city"),  'class -> "form-control", 'label -> "Email Address")
+        </div>
+                       <button type="submit" class="btn btn-primary">Sign up</button>
+     </div>
 </form>
 
-}
+	}
+
 }

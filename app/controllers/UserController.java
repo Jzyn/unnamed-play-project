@@ -88,7 +88,6 @@ public class UserController extends Controller {
             }
 
 
-
             MultipartFormData data = request().body().asMultipartFormData();
             FilePart image = data.getFile("upload");
 
@@ -137,44 +136,21 @@ return redirect(routes.HomeController.productInfo(p.getId()));
     }
 
 
-    // Save an image file
-    public String saveFile(Long id,FilePart<File> image) {
+@Transactional
+    public String saveFile(Long id, FilePart image){
         if (image != null) {
-            // Get mimetype from image
             String mimeType = image.getContentType();
-            // Check if uploaded file is an image
             if (mimeType.startsWith("image/")) {
-                // Create file from uploaded image
-                File file = image.getFile();
-                // create ImageMagick command instance
+                File file = (File) image.getFile();
                 ConvertCmd cmd = new ConvertCmd();
-                // create the operation, add images and operators/options
-                //Standard Image
                 IMOperation op = new IMOperation();
-                // thumbnail
-                IMOperation thumb = new IMOperation();
-
-                // Get the uploaded image file
                 op.addImage(file.getAbsolutePath());
-
-                    // Resize using height and width constraints
-                    op.resize(300,200);
-                    // Save the  image
-                    op.addImage("public/images/productImages/" + id + ".jpg");
-
-                    // Get the uploaded image file
-                    thumb.addImage(file.getAbsolutePath());
-                    thumb.thumbnail(60);
-                    // Save the  image
-                    thumb.addImage("public/images/productImages/thumbnails/" + id + ".jpg");
-
-
-                // execute the operation
+                op.resize(300, 200);
+                op.addImage("public/images/postImages/" + id +".jpg");
                 try{
                     cmd.run(op);
-                    cmd.run(thumb);
-                }
-                catch(Exception e){
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return " and image saved";
