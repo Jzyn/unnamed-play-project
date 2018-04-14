@@ -1,4 +1,5 @@
-@(user: models.users.User)
+@import helper._
+@(user: models.users.User, editDetailsForm: Form[models.users.User])
 @*
  * Call the `main` template with two arguments. The first
  * argument is a `String` with the title of the page, the second
@@ -8,30 +9,44 @@
 <!-- SOC -->
 
 <div class="under-logo">
-<figure class="figure">
-  <img src="https://picsum.photos/250" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-  <figcaption class="text-center">@user.getUsername() | <a href="@controllers.security.routes.LoginController.logout()"> Logout </a></figcaption>
-</figure>
+    <div class="col-sm-2">
+     <img src="https://picsum.photos/250" class="rounded float-left" alt="A generic square placeholder image with rounded corners in a figure."><p>@user.getUsername() | <a href="@controllers.security.routes.LoginController.logout()"> Logout </a></p>
+    </div>
 </div>
 
 <div class="container">
-<figure class="figure">
-  <img src="https://picsum.photos/100" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-  <figcaption class="text-center">Product &uarr;</figcaption>
-</figure>
+<h4 class="blockquote text-center"> Your Account Details </h4>
+    <div class="blockquote text-center">
 
+        @helper.form(action = routes.HomeController.signupSubmit(), 'role-> "form") {
 
-<figure class="figure">
-  <img src="https://picsum.photos/100" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-  <figcaption class="text-center">Product &uarr;</figcaption>
-</figure>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    @inputText(editDetailsForm("email"),  'class -> "form-control", 'value -> "@user.getEmail()")
+                </div>
+                <div class="form-group col-md-12">
+                    @inputText(editDetailsForm("name"),  'class -> "form-control")
+                </div>
+                <div class="form-group col-md-12">
+                    @inputText(editDetailsForm("username"),  'class -> "form-control")
+                </div>
+                <div class="form-group col-md-12">
+                    @inputText(editDetailsForm("address1"),  'class -> "form-control")
+                </div>
+                <div class="form-group col-md-12">
+                    @inputText(editDetailsForm("address2"),  'class -> "form-control")
+                </div>
+                <div class="form-group col-md-12">
+                    @inputText(editDetailsForm("city"),  'class -> "form-control")
+                </div>
+                <input type="submit" class="form-group col-md-12" value="Save Changes">
+            </div>
+        </form>
 
+        }
 
-
-<figure class="figure">
-  <img src="https://picsum.photos/100" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-  <figcaption class="text-center">Product &uarr;</figcaption>
-</figure>
+    </div>
 </div>
 
 

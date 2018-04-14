@@ -59,26 +59,23 @@ public class HomeController extends Controller {
 
     public Result signupSubmit() {
 
-    Form<User> newUserForm = formFactory.form(User.class).bindFromRequest();
+    Form<User> signUpForm = formFactory.form(User.class).bindFromRequest();
 
-	if(newUserForm.hasErrors()){
-
-	return badRequest(signup.render(newUserForm, getUserFromSession()));
+	if(signUpForm.hasErrors()){
+	return badRequest(signup.render(signUpForm, getUserFromSession()));
 	}
 
-	User newUser = newUserForm.get();
-        if (newUser.getEmail() == null) {
+	User newUser = signUpForm.get();
+        if (newUser.getEmail().equals(User.find.ref(newUser.getEmail()))) {
             // Save to the database via Ebean (remember Product extends Model)
-            newUser.setRole("user");
-            newUser.save();
-	    flash("Success", "You have been registered. You can now Login.");
+            flash("Email already exists");
+            return redirect(routes.HomeController.signUp());
         }
         // Product already exists so update
-        else if (newUser.getEmail() != null) {
-            newUser.update();
-        }
-
-	return redirect(controllers.routes.HomeController.index());
+        newUser.setRole("user");
+        newUser.save();
+        flash("Success", "You have been registered. You can now Login.");
+	       return redirect(routes.HomeController.index());
 
 }
 

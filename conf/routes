@@ -25,9 +25,13 @@ POST    /loginSubmit                        controllers.security.LoginController
 GET     /logout                             controllers.security.LoginController.logout
 
 GET     /signup                             controllers.HomeController.signUp
-POST    /signUpSubmit                       controllers.HomeController.signupSubmit
+POST    /signupSubmit                       controllers.HomeController.signupSubmit
 
-
+GET     /admin/users                      controllers.AdminController.vUsers()
+GET     /admin/products                      controllers.AdminController.vProducts()
+GET     /admin/deleteUser/:email            controllers.AdminController.deleteUser(email: String)
+GET     /admin/deleteProduct/:id            controllers.AdminController.deleteProduct(id : Long)
+GET     /admin/index                      controllers.AdminController.index()
 
 GET     /user/listproduct                   controllers.UserController.listProduct
 POST    /user/productSubmit                 controllers.UserController.productSubmit

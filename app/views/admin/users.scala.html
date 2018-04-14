@@ -1,0 +1,47 @@
+@(user: models.users.User, users: List[models.users.User])
+@adminmain("Users", user){
+
+<div class="container">
+        @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+        }
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <!-- The header row-->
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Address 2</th>
+                <th>City</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Product row(s) -->
+            <!-- Start of For loop - For each p in products add a row -->
+            @for(u <- users) {
+            <tr>
+                <td>@u.getName</td>
+                <td>@u.getUsername</td>
+                <td>@u.getEmail</td>
+                <td>@u.getAddress1</td>
+                <td>@u.getAddress2</td>
+                <td>@u.getCity</td>
+                <!-- Delete product button -->
+                <td>
+                    <a href="@routes.AdminController.deleteUser(u.getEmail)"
+                       onclick="return confirmDel();">
+                       <button>  <i class="far fa-trash-alt"></i> </button>
+                    </a>
+                </td>
+            </tr>
+            } <!-- End of For loop -->
+            </tbody>
+        </table>
+</div>
+<!-- End of content for main -->
+}

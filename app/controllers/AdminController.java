@@ -3,11 +3,9 @@ package controllers;
 import controllers.security.*;
 
 import models.*;
-import models.Diet;
 import models.users.User;
 import play.db.ebean.Transactional;
 import play.mvc.*;
-import views.html.*;
 import views.html.admin.*;
 
 import play.api.Environment;
@@ -42,11 +40,20 @@ private Environment env;
 
     @Transactional
        private User getCurrentUser() {
-        User u = User.getLoggedIn(session().get("email"));
+        User u = User.getUserById(session().get("email"));
         return u;
     }
 
 
+    public Result vUsers() {
+        List<User> userList = User.findAll();
+        return ok(users.render(getCurrentUser(), userList));
+    }
+
+    public Result vProducts() {
+       List<Product> productList = Product.findAll();
+       return ok(products.render(getCurrentUser(), productList, env));
+    }
 
     // Delete Product by id
     @Transactional
@@ -58,7 +65,7 @@ private Environment env;
         flash("success", "User has been deleted");
 
         // Redirect to products page
-        return redirect(routes.AdminController.vUsers());
+        return redirect(routes.AdminController.index());
     }
 
 
@@ -69,9 +76,11 @@ private Environment env;
     // Render and return  the add new product page
     // The page will load and display an empty add product form
 
-
-
-  public Result index() { return ok (index.render(getCurrentUser()));}
+    public Result index() {
+        List<Product> products = Product.findAll();
+        List<User> users = User.findAll();
+    return ok (index.render(getCurrentUser(), products, users, env));
+}
 
 @Transactional
 public Result deleteProduct(Long id) {
@@ -80,7 +89,7 @@ Product.find.ref(id).delete();
 
 flash("success", "Product has been deleted");
 
-return redirect (controllers.routes.AdminController.products());
+return redirect (controllers.routes.AdminController.index());
 }
 
 }

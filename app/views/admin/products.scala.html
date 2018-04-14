@@ -1,0 +1,50 @@
+@(user: models.users.User, products: List[models.Product],env: play.api.Environment)
+@adminmain("Users", user){
+
+<div class="container">
+    @if(flash.containsKey("success")) {
+    <div class="alert alert-success">
+        @flash.get("success")
+    </div>
+    }
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <!-- The header row-->
+        <tr>
+            <th>Thumbnail</th>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Seller</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Product row(s) -->
+        <!-- Start of For loop - For each p in products add a row -->
+        @for(p <- products) {
+        <tr>
+            <td>    @if(env.resource("public/images/productImages/" + p.getId + ".jpg").isDefined){
+                <img src = "/assets/images/productImages/@(p.getId + ".jpg")"/>
+                }</td>
+            <td>@p.getTitle</td>
+            <td>@p.getDescription</td>
+            <td>@p.printCatList</td>
+            <td>@p.getPrice</td>
+            <td>@p.getSeller</td>
+            <!-- Delete product button -->
+            <td>
+                <a href="@routes.AdminController.deleteProduct(p.getId)"
+                   onclick="return confirmDel();">
+                    <button>  <i class="far fa-trash-alt"></i> </button>
+                </a>
+            </td>
+        </tr>
+        } <!-- End of For loop -->
+        </tbody>
+    </table>
+</div>
+<!-- End of content for main -->
+}

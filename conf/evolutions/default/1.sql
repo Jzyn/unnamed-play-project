@@ -5,7 +5,7 @@
 
 create table category (
   id                            bigint not null,
-  name                          varchar(255),
+  filter                        varchar(255),
   constraint pk_category primary key (id)
 );
 create sequence category_seq;
@@ -18,7 +18,7 @@ create table category_product (
 
 create table product (
   id                            bigint not null,
-  name                          varchar(255),
+  title                         varchar(255),
   seller                        varchar(255),
   description                   varchar(1000),
   price                         double,
@@ -29,7 +29,7 @@ create sequence product_seq;
 create table user (
   role                          varchar(255),
   email                         varchar(255) not null,
-  name                          varchar(255),
+  fullname                      varchar(255),
   username                      varchar(255),
   password                      varchar(255),
   address1                      varchar(255),

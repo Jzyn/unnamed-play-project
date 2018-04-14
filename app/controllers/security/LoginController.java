@@ -1,5 +1,6 @@
 package controllers.security;
 
+import controllers.routes;
 import play.api.Environment;
 import play.mvc.*;
 import play.data.*;
@@ -52,15 +53,31 @@ public class LoginController extends Controller {
             // If errors, show the form again
             return badRequest(login.render(loginForm, User.getUserById(session().get("email"))));
         }
-        else {
+        else{
             // User Logged in successfully
             // Clear the existing session - resets session id
             session().clear();
             // Store the logged in email in the session (cookie)
             session("email", loginForm.get().getEmail());
+            // Check user type
+            User u = User.getUserById(loginForm.get().getEmail());
+            // If admin - go to admin section
+            if (u != null && "admin".equals(u.getRole()))
+            {
+                return redirect(controllers.routes.AdminController.index());
+            }
+            else if(u != null && "user".equals(u.getRole()))
+            {
+                return redirect(routes.HomeController.index());
+            }
+            else
+            {
+                // Return to home page
+                return redirect(controllers.routes.HomeController.index());
+            }
         }
         // Return to admin or customer home page
-            return redirect(controllers.routes.HomeController.index());
+
         
     }
 

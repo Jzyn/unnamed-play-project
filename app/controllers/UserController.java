@@ -54,7 +54,8 @@ public class UserController extends Controller {
     }
 
     public Result profile() {
-        return ok(profile.render(getUserFromSession()));
+        Form<User> userDetailsForm = formFactory.form(User.class);
+        return ok(profile.render(getUserFromSession(),userDetailsForm));
     }
 
     public Result listProduct() {
@@ -65,8 +66,10 @@ public class UserController extends Controller {
 
     @Transactional
     public Result productSubmit() {
+        String saveImageMsg;
+
+
         try {
-            String saveImageMsg;
             // Bind form instance to the values submitted from the form
             Form<Product> listProductForm = formFactory.form(Product.class).bindFromRequest();
             // Check for errors
@@ -87,9 +90,8 @@ public class UserController extends Controller {
                 p.update();
             }
 
-
-            MultipartFormData data = request().body().asMultipartFormData();
-            FilePart image = data.getFile("upload");
+            Http.MultipartFormData<File> body = request().body().asMultipartFormData();
+            Http.MultipartFormData.FilePart<File> image = body.getFile("picture");
 
             // Save the image file
             saveImageMsg = saveFile(p.getId(), image);
@@ -97,9 +99,8 @@ public class UserController extends Controller {
             // Set a success message in temporary flash
             // for display in return view
 
-            flash("success" + p.getName() + " has been submitted");
+            flash("success" + p.getTitle() + " has been submitted");
             return redirect(controllers.routes.UserController.profile());
-
         } catch (Exception ex) {
             flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
             return redirect(routes.HomeController.index());
@@ -146,7 +147,7 @@ return redirect(routes.HomeController.productInfo(p.getId()));
                 IMOperation op = new IMOperation();
                 op.addImage(file.getAbsolutePath());
                 op.resize(300, 200);
-                op.addImage("public/images/postImages/" + id +".jpg");
+                op.addImage("public/images/productImages/" + id +".jpg");
                 try{
                     cmd.run(op);
 

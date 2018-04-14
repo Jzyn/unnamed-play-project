@@ -23,7 +23,7 @@ public class AuthAdmin extends Action.Simple {
         // Check if current user (in session) is an admin
         String id = ctx.session().get("email");
         if (id != null) {
-            User u = User.getLoggedIn(id);
+            User u = User.getUserById(id);
             if ("admin".equals(u.getRole())) {
 
                 // User admin sp continue with the http request

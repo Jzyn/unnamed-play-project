@@ -1,9 +1,9 @@
 @import helper._
 
-@(signUpForm: play.data.Form[models.users.User], user: models.users.User)
+@(signUpForm: Form[models.users.User], user: models.users.User)
 
 @main("Sign up", user) {
-@helper.form(action = routes.HomeController.signupSubmit(),'id-> "SignIn-UpBody", 'role-> "form") {
+@helper.form(action = routes.HomeController.signupSubmit(), 'role-> "form") {
 
 <form>
     <div class="form-row">
@@ -17,7 +17,7 @@
   	     @inputText(signUpForm("name"),  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-  	     @inputText(signUpForm("username"),  'class -> "form-control", 'label -> "Email Address")
+            @inputText(signUpForm("username"),  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
   	     @inputText(signUpForm("address1"),  'class -> "form-control", 'label -> "Email Address")
@@ -25,10 +25,10 @@
         <div class="form-group col-md-6">
  	     @inputText(signUpForm("address2"),  'class -> "form-control", 'label -> "Email Address")
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
              @inputText(signUpForm("city"),  'class -> "form-control", 'label -> "Email Address")
         </div>
-                       <button type="submit" class="btn btn-primary">Sign up</button>
+                       <input type="submit" class="btn btn-primary" value="Create">
      </div>
 </form>
 

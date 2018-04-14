@@ -1,0 +1,110 @@
+@(user: models.users.User, products: List[models.Product], users: List[models.users.User], env: play.api.Environment)
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@adminmain("home", user) {
+<!-- SOC -->
+<div class="under-logo">
+    <div class="col-sm-2">
+        <!---Optional Navigation Bar--->
+        <h4 id="TextAlignCenter">Individual Tables</h4>
+        <ul class="nav nav-pills nav-stacked">
+            <li id="TextAlignCenter"><a href="@routes.AdminController.vUsers()">User Table</a></li>
+            <li id="TextAlignCenter"><a href="@routes.AdminController.vProducts()">Product Table</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+
+
+        @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+        }
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <!-- The header row-->
+            <tr>
+                <th>Thumbnail</th>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Seller</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Product row(s) -->
+            <!-- Start of For loop - For each p in products add a row -->
+            @for(p <- products) {
+            <tr>
+                <td>    @if(env.resource("public/images/productImages/" + p.getId + ".jpg").isDefined){
+                    <img src = "/assets/images/productImages/@(p.getId + ".jpg")"/>
+                    }</td>
+                <td>@p.getTitle</td>
+                <td>@p.getDescription</td>
+                <td>@p.printCatList</td>
+                <td>@p.getPrice</td>
+                <td>@p.getSeller</td>
+                <!-- Delete product button -->
+                <td>
+                    <a href="@routes.AdminController.deleteProduct(p.getId)"
+                       onclick="return confirmDel();">
+                        <button>  <i class="far fa-trash-alt"></i> </button>
+                    </a>
+                </td>
+            </tr>
+            } <!-- End of For loop -->
+            </tbody>
+        </table>
+
+    <br>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <!-- The header row-->
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Address 2</th>
+            <th>City</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Product row(s) -->
+        <!-- Start of For loop - For each p in products add a row -->
+        @for(u <- users) {
+        <tr>
+            <td>@u.getName</td>
+            <td>@u.getUsername</td>
+            <td>@u.getEmail</td>
+            <td>@u.getAddress1</td>
+            <td>@u.getAddress2</td>
+            <td>@u.getCity</td>
+            <!-- Delete product button -->
+            <td>
+                <a href="@routes.AdminController.deleteUser(u.getEmail)"
+                   onclick="return confirmDel();">
+                    <button>  <i class="far fa-trash-alt"></i> </button>
+                </a>
+            </td>
+        </tr>
+        } <!-- End of For loop -->
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+    <!-- EOC -->
+}

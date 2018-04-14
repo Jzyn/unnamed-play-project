@@ -19,7 +19,7 @@ public class Product extends Model{
 
     // Other fields marked as being required (for validation purposes)
     @Constraints.Required
-    private String name;
+    private String title;
 
     //Adds a category type i.e. book, action figure etc..
     @ManyToMany(cascade= CascadeType.ALL, mappedBy = "products")
@@ -46,9 +46,9 @@ public class Product extends Model{
     }
 
     // Constructor to initialise object
-    public  Product(Long id, String name, List<Category> category, String seller, String description, double price) {
+    public  Product(Long id, String title, List<Category> category, String seller, String description, double price) {
         this.id = id;
-        this.name = name;
+        this.title = title;
 	this.category = category;
         this.seller = seller;
         this.description = description;
@@ -67,13 +67,13 @@ public class Product extends Model{
     //Overidden
     public static List<Product> findAll(String filter) 
     {
-        return Product.find.where().ilike("name","%"+filter+"%").orderBy("name asc").findList();
+        return Product.find.where().ilike("title","%"+filter+"%").orderBy("title asc").findList();
     }
 
     //This allows the user to find all products with a search filter and Category.
     public static List<Product> findFilter(Long catId,String filter) 
     {
-		return Product.find.where().eq("category.id",catId).ilike("name","%"+filter+"%").orderBy("name asc").findList();
+		return Product.find.where().eq("category.id",catId).ilike("title","%"+filter+"%").orderBy("title asc").findList();
     }
 
     public Long getId() {
@@ -84,12 +84,12 @@ public class Product extends Model{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -148,7 +148,7 @@ public class Product extends Model{
 		for(Category cat: category)
 		{
 	 
-		 categories+= "/"+cat.getName();
+		 categories+= "/"+cat.getFilter();
 	 
 		}
 		return categories+".";

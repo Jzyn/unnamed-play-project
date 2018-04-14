@@ -5,7 +5,7 @@
 
 
 <div class="container">
-    @helper.form(action = routes.UserController.productSubmit()) {
+    @helper.form(action = routes.UserController.productSubmit(), 'role-> "form") {
 <form>
     <!-- Image upload input -->
     <div class="container-fluid">
@@ -18,15 +18,15 @@
     </div>
 
 <div class="form-group">
-    @inputText(listProductForm("name"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: Unopened original Avengers Comic")
+    @inputText(listProductForm("title"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: Unopened original Avengers Comic")
 </div>
-<div class="form-group">
-    @inputText(listProductForm("price"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: €40")
-</div>
+
     <label id="FormLabel">Description</label>
     <textarea row="5" name="description" class="form-control"></textarea>
 
-    @inputText(listProductForm("id"), '_label -> "", 'hidden -> "hidden")
+<div class="form-group">
+    @inputText(listProductForm("price"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: €40")
+</div>
 
     <!-- cat select -->
     @for((value,name) <- Category.options) {
@@ -40,6 +40,8 @@
     }
     />
     }
+
+    @inputText(listProductForm("id"), '_label -> "", 'hidden -> "hidden")
 
 
 

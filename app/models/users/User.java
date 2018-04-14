@@ -3,7 +3,7 @@ package models.users;
 import java.util.*;
 import javax.persistence.*;
 
-import com.avaje.ebean.Model;
+import com.avaje.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 import play.Logger;
@@ -25,10 +25,10 @@ public class User extends Model {
     private String email;
 
     @Constraints.Required
-    private String name;
+    private String fullname;
 
+    @Constraints.Required
     private String username;
-
 
     @Constraints.Required
     private String password;
@@ -36,13 +36,13 @@ public class User extends Model {
     @Column(insertable=false, updatable=false)
     private String role;
 
-   
     @Constraints.Required
     private String address1;
 
     @Constraints.Required
     private String address2;
 
+    @Constraints.Required
     private String city;
 
     public User()
@@ -51,14 +51,14 @@ public class User extends Model {
     }
     //Overloaded Constructors
 
-    public User(String email,String name,String password,String role, String address1, String address2, String city)
+    public User(String email,String fullname, String username, String password,String role, String address1, String address2, String city)
 
     {
 
         this.role = role;
         this.email = email;
-        this.name = name;
-        this.username = name;
+        this.fullname = fullname;
+        this.username = username;
         this.password = password;
         this.address1 = address1;
         this.address2 = address2;
@@ -100,7 +100,7 @@ public class User extends Model {
     }
     public String getName()
     {
-        return name;
+        return fullname;
     }
     public String getUsername()
     {
@@ -133,7 +133,7 @@ public class User extends Model {
     }
     public void setName(String name)
     {
-        this.name = name;
+        this.fullname = name;
     }
     public void setUsername(String username)
     {

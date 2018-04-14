@@ -11,7 +11,7 @@
 		<li id="TextAlignCenter"><a href="@routes.HomeController.products(0)">All</a></li>
          	@for(cat <-categories) {
 			<hr>
-               		 <li id="TextAlignCenter"><a id="OptionalSecondaryNavbar" href="@routes.HomeController.products(cat.getId)">@cat.getName()</a></li>
+               		 <li id="TextAlignCenter"><a id="OptionalSecondaryNavbar" href="@routes.HomeController.products(cat.getId)">@cat.getFilter()</a></li>
 					 
             	 }
          </ul>
@@ -62,7 +62,7 @@
       @for(prod <- products) {
       <div class="panel panel-default">
 		<div class="panel-heading" id="mediaTitleBanner">
-			<h2>@prod.getName()</h2>
+			<h2>@prod.getTitle()</h2>
 		</div>
       		<div class="panel-body" id="mediaBorder">
 			<div class="row">

@@ -16,7 +16,7 @@ public class Category extends Model {
     private Long id;
 
     @Constraints.Required
-    private String name;
+    private String filter;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Product> products;
@@ -29,9 +29,9 @@ public class Category extends Model {
 
     }
 
-    public Category(Long id, String name, List<Product> products) {
+    public Category(Long id, String filter, List<Product> products) {
         this.setId(id);
-        this.setName(name);
+        this.setFilter(filter);
         this.setProducts(products);
     }
 
@@ -42,7 +42,7 @@ public class Category extends Model {
 
     //Find all Products in the database in ascending order by name
     public static List<Category> findAll() {
-        return Category.find.where().orderBy("name asc").findList();
+        return Category.find.where().orderBy("filter asc").findList();
     }
 
 
@@ -52,7 +52,7 @@ public class Category extends Model {
 
         // Get all categories from the DB and add to the options Hash map
         for(Category c: Category.findAll()) {
-            options.put(c.getId().toString(), c.getName());
+            options.put(c.getId().toString(), c.getFilter());
         }
         return options;
     }
@@ -71,12 +71,12 @@ public class Category extends Model {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFilter() {
+        return filter;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFilter(String filter) {
+        this.filter = filter;
     }
 
     public List<Product> getProducts() {

@@ -19,9 +19,9 @@ public class Admin extends User{
 
         }
 
-        public Admin(String email, String role, String firstName, String lastName, String password)
+        public Admin(String email,String fullname, String username, String password,String role, String address1, String address2, String city)
         {
-       		 super(email, role, firstName, lastName, password);
+       		 super(email, fullname, username, password, role, address1, address2, city);
         }
 
 }
