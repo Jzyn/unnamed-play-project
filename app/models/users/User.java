@@ -22,10 +22,12 @@ public class User extends Model {
 
 
     @Id
+    @Column(updatable=false)
     private String email;
 
     @Constraints.Required
-    private String fullname;
+    @Column(updatable=false)
+    private String name;
 
     @Constraints.Required
     private String username;
@@ -51,18 +53,18 @@ public class User extends Model {
     }
     //Overloaded Constructors
 
-    public User(String email,String fullname, String username, String password,String role, String address1, String address2, String city)
+    public User(String email,String name, String username, String password,String role, String address1, String address2, String city)
 
     {
 
         this.role = role;
         this.email = email;
-        this.fullname = fullname;
+        this.name = name;
         this.username = username;
         this.password = password;
         this.address1 = address1;
         this.address2 = address2;
-		this.city = city;
+	this.city = city;
         this.password = password;
     }
 
@@ -100,7 +102,7 @@ public class User extends Model {
     }
     public String getName()
     {
-        return fullname;
+        return name;
     }
     public String getUsername()
     {
@@ -133,7 +135,7 @@ public class User extends Model {
     }
     public void setName(String name)
     {
-        this.fullname = name;
+        this.name = name;
     }
     public void setUsername(String username)
     {

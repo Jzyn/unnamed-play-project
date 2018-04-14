@@ -59,6 +59,7 @@ public class HomeController extends Controller {
 
     public Result signupSubmit() {
 
+	try{
     Form<User> signUpForm = formFactory.form(User.class).bindFromRequest();
 
 	if(signUpForm.hasErrors()){
@@ -71,12 +72,14 @@ public class HomeController extends Controller {
             flash("Email already exists");
             return redirect(routes.HomeController.signUp());
         }
-        // Product already exists so update
         newUser.setRole("user");
         newUser.save();
         flash("Success", "You have been registered. You can now Login.");
 	       return redirect(routes.HomeController.index());
-
+  } catch (Exception ex) {
+            flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
+            return redirect(routes.HomeController.index());
+        }
 }
 
 

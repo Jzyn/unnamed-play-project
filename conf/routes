@@ -26,6 +26,7 @@ GET     /logout                             controllers.security.LoginController
 
 GET     /signup                             controllers.HomeController.signUp
 POST    /signupSubmit                       controllers.HomeController.signupSubmit
+POST    /editdetailsSubmit                  controllers.UserController.editProfileSubmit
 
 GET     /admin/users                      controllers.AdminController.vUsers()
 GET     /admin/products                      controllers.AdminController.vProducts()

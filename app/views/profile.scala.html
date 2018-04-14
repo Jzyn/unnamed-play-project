@@ -18,27 +18,25 @@
 <h4 class="blockquote text-center"> Your Account Details </h4>
     <div class="blockquote text-center">
 
-        @helper.form(action = routes.HomeController.signupSubmit(), 'role-> "form") {
+        @helper.form(action = routes.UserController.editProfileSubmit(), 'role-> "form") {
 
         <form>
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    @inputText(editDetailsForm("email"),  'class -> "form-control", 'value -> "@user.getEmail()")
+                       <label id="FormLabel">Username</label><br>
+    		     <input type="text" name="username" value="@user.getUsername()">
                 </div>
                 <div class="form-group col-md-12">
-                    @inputText(editDetailsForm("name"),  'class -> "form-control")
+                       <label id="FormLabel">Address Line 1</label><br>
+    		     <input type="text" name="address1" value="@user.getAddress1()">
                 </div>
                 <div class="form-group col-md-12">
-                    @inputText(editDetailsForm("username"),  'class -> "form-control")
+                       <label id="FormLabel">Address Line 2</label><br>
+    		      <input type="text" name="address2" value="@user.getAddress2()">
                 </div>
                 <div class="form-group col-md-12">
-                    @inputText(editDetailsForm("address1"),  'class -> "form-control")
-                </div>
-                <div class="form-group col-md-12">
-                    @inputText(editDetailsForm("address2"),  'class -> "form-control")
-                </div>
-                <div class="form-group col-md-12">
-                    @inputText(editDetailsForm("city"),  'class -> "form-control")
+                       <label id="FormLabel">City</label><br>
+    		     <input type="text" name="city" value="@user.getCity()">
                 </div>
                 <input type="submit" class="form-group col-md-12" value="Save Changes">
             </div>

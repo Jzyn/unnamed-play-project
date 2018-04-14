@@ -42,7 +42,7 @@ public class Product extends Model{
     //List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
     // Default constructor
-    public  Product() {
+    public Product() {
     }
 
     // Constructor to initialise object

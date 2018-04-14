@@ -64,6 +64,19 @@ public class UserController extends Controller {
         return ok(listproduct.render(listProductForm, User.getUserById(session().get("email")), env));
     }
 
+    public Result editProfileSubmit() {
+	Form<User> userDetailsForm = formFactory.form(User.class).bindFromRequest();
+	 if (userDetailsForm.hasErrors()) {
+                // If errors, show the form again
+                return badRequest(profile.render(getUserFromSession(), userDetailsForm));
+	 }
+	        User u = getUserFromSession();
+                u.setRole("user");
+		u.update();
+
+                return redirect(controllers.routes.HomeController.index());
+            }
+
     @Transactional
     public Result productSubmit() {
         String saveImageMsg;
@@ -122,6 +135,7 @@ public class UserController extends Controller {
 	    p.setPrice(p.getPrice() + 5);
 	    p.update();
 
+
             return redirect(routes.HomeController.productInfo(p.getId()));
 }
 else{
@@ -135,7 +149,6 @@ return redirect(routes.HomeController.productInfo(p.getId()));
 
        
     }
-
 
 @Transactional
     public String saveFile(Long id, FilePart image){
