@@ -16,7 +16,8 @@ import play.api.Environment;
 
 import play.mvc.Http.*;
 import play.mvc.Http.MultipartFormData.FilePart;
-import java.io.File;
+import java.io.*;
+import java.net.URL;
 
 // File upload and image editing dependencies
 import org.im4java.core.ConvertCmd;
@@ -55,9 +56,32 @@ public class UserController extends Controller {
         return User.getUserById(session().get("email"));
     }
 
+    @Transactional
+    public Result updateProfile(String email) {
+
+        User u;
+        Form<User> editDetailsForm;
+
+        try {
+            u = User.find.byId(email);
+
+            // Create a form based on the Room class and fill using r
+            editDetailsForm = formFactory.form(User.class).fill(u);
+
+            } catch (Exception ex) {
+                // Display an error message or page
+                return badRequest("error");
+        }
+
+        return ok(profile.render(getUserFromSession(), editDetailsForm));
+    }
+
     public Result profile() {
         Form<User> userDetailsForm = formFactory.form(User.class);
         return ok(profile.render(getUserFromSession(),userDetailsForm));
+
+
+        // Render the Add Room View, passing the form object
     }
 
     public Result listProduct() {
@@ -72,7 +96,7 @@ public class UserController extends Controller {
                 // If errors, show the form again
                 return badRequest(profile.render(getUserFromSession(), userDetailsForm));
 	 }
-	        User u = getUserFromSession();
+	        User u = userDetailsForm.get();
                 u.setRole("user");
 		u.update();
 
@@ -81,11 +105,12 @@ public class UserController extends Controller {
 
     @Transactional
     public Result productSubmit() {
-
+       
 
         try {
             // Bind form instance to the values submitted from the form
             Form<Product> listProductForm = formFactory.form(Product.class).bindFromRequest();
+
             // Check for errors
             // Uses the validate method defined in the Login class
             if (listProductForm.hasErrors()) {
@@ -106,7 +131,6 @@ public class UserController extends Controller {
 
 
             // Save the image file
-
             // Set a success message in temporary flash
             // for display in return view
 

@@ -33,18 +33,16 @@ public class User extends Model {
     private String username;
 
     @Constraints.Required
+    @Column(updatable=false)
     private String password;
 
     @Column(insertable=false, updatable=false)
     private String role;
 
-    @Constraints.Required
     private String address1;
 
-    @Constraints.Required
     private String address2;
 
-    @Constraints.Required
     private String city;
 
     public User()

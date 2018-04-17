@@ -31,6 +31,7 @@ POST    /editdetailsSubmit                  controllers.UserController.editProfi
 GET     /admin/users                      controllers.AdminController.vUsers()
 GET     /admin/products                      controllers.AdminController.vProducts()
 GET     /admin/deleteUser/:email            controllers.AdminController.deleteUser(email: String)
+GET     /updateProfile/:email               controllers.UserController.updateProfile(email: String)
 GET     /admin/deleteProduct/:id            controllers.AdminController.deleteProduct(id : Long)
 GET     /admin/index                      controllers.AdminController.index()
 

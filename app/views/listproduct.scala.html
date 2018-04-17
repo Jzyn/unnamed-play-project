@@ -8,6 +8,9 @@
     @helper.form(action = routes.UserController.productSubmit(), 'role-> "form") {
 <form>
 
+<input type='file' onchange="readURL(this);" />
+    <img id="blah" src="#" alt="your image" />
+
 <div class="form-group">
     @inputText(listProductForm("title"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: Unopened original Avengers Comic")
 </div>
