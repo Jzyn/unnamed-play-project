@@ -20,6 +20,7 @@ create table product (
   id                            bigint not null,
   title                         varchar(255),
   seller                        varchar(255),
+  latest_bidder                 varchar(255),
   description                   varchar(1000),
   price                         double,
   constraint pk_product primary key (id)

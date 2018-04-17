@@ -33,6 +33,8 @@ import views.html.*;
 // Authorise user (check if logged in)
 //*@With(AuthUser.class)*@
 public class UserController extends Controller {
+
+
     // Declare a private FormFactory instance
     private FormFactory formFactory;
 
@@ -127,17 +129,28 @@ public class UserController extends Controller {
 
             // Create a form based on the Room class and fill using r
             bidForm = formFactory.form(Product.class).fill(p);
-            if(p.getPrice() <= 160){
-	    p.setPrice(p.getPrice() + 5);
-	    p.update();
-
-
+            if(p.getPrice() < 160)
+            {
+                p.setPrice(p.getPrice() + 5);
+                p.setLatestBidder(u.getEmail());
+                p.update();
+            }
+            else if (p.getPrice() == 160 && p.getLatestBidder() == u.getEmail())
+            {
+                    flash("success", "congrats " +p.getLatestBidder() +"! You have won the bid!");
+            }
+            else if (p.getPrice() == 160 && p.getLatestBidder() != u.getEmail())
+            {
+                flash("unfortunate", "This bid has ended");
+            }
+            else
+                {
+                    flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
             return redirect(routes.HomeController.productInfo(p.getId()));
-}
-else{
-flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
-return redirect(routes.HomeController.productInfo(p.getId()));
-}
+
+            }
+            return redirect(routes.HomeController.productInfo(p.getId()));
+
             } catch (Exception ex) {
                 // Display an error message or page
                 return badRequest("error");

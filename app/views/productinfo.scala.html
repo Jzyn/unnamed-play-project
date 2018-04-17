@@ -2,10 +2,22 @@
 @import helper._
 
 @main("Product Info",user) {
+
+
+
 <div class="container">
 
+    @if(flash.containsKey("success")) {
+    <div class="alert alert-success">
+        @flash.get("success")
+    </div>
+    }
 
-   
+    @if(flash.containsKey("unfortunate")) {
+    <div class="alert alert-warning">
+        @flash.get("unfortunate")
+    </div>
+    }
         <h3>@selectedProduct.getTitle()</h3>
    
 

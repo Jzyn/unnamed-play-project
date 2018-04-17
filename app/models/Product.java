@@ -30,6 +30,7 @@ public class Product extends Model{
     private List<Long> catSelect = new ArrayList<Long>();
 
     private String seller;
+    private String latestBidder;
 
     @Column(columnDefinition="VARCHAR2(1000)")
     @Constraints.Required
@@ -46,11 +47,12 @@ public class Product extends Model{
     }
 
     // Constructor to initialise object
-    public  Product(Long id, String title, List<Category> category, String seller, String description, double price) {
+    public  Product(Long id, String title, List<Category> category, String seller, String latestBidder, String description, double price) {
         this.id = id;
         this.title = title;
 	this.category = category;
         this.seller = seller;
+        this.latestBidder = latestBidder;
         this.description = description;
         this.price = price;
     }
@@ -115,6 +117,10 @@ public class Product extends Model{
     public void setSeller(String seller) {
         this.seller = seller;
     }
+
+    public String getLatestBidder() { return latestBidder; }
+
+    public void setLatestBidder(String latestBidder) {this.latestBidder = latestBidder; }
 
 	//needed for filtering searches and organizing results
     public List getCategory() 
