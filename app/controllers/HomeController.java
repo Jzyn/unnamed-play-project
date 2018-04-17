@@ -112,7 +112,7 @@ public class HomeController extends Controller {
             Form<Product> listProductForm = formFactory.form(Product.class).bindFromRequest();
             Product selectedProd = Product.find.byId(prodId);
             User currentUser = getUserFromSession();
-            return ok(productinfo.render(listProductForm,selectedProd,currentUser,env));
+            return ok(productinfo.render(listProductForm,selectedProd,currentUser, env));
         } catch(Exception ex)
         {
             flash("exception","Uh Oh Something unexpected happened");

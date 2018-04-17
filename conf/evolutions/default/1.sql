@@ -22,7 +22,8 @@ create table product (
   seller                        varchar(255),
   latest_bidder                 varchar(255),
   description                   varchar(1000),
-  price                         double,
+  price                         integer,
+  max_price                     integer,
   constraint pk_product primary key (id)
 );
 create sequence product_seq;

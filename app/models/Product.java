@@ -37,7 +37,10 @@ public class Product extends Model{
     private String description;
 
     @Constraints.Required
-    private double price;
+    private int price;
+
+    @Constraints.Required
+    private int maxPrice;
 
     //@OneToMany(cascade = CascadeType.ALL)
     //List<OrderItem> orderItems = new ArrayList<OrderItem>();
@@ -47,7 +50,7 @@ public class Product extends Model{
     }
 
     // Constructor to initialise object
-    public  Product(Long id, String title, List<Category> category, String seller, String latestBidder, String description, double price) {
+    public  Product(Long id, String title, List<Category> category, String seller, String latestBidder, String description, int price, int maxPrice) {
         this.id = id;
         this.title = title;
 	this.category = category;
@@ -55,6 +58,7 @@ public class Product extends Model{
         this.latestBidder = latestBidder;
         this.description = description;
         this.price = price;
+        this.maxPrice = maxPrice;
     }
 
     //Generic query helper for entity Computer with id Long
@@ -102,13 +106,17 @@ public class Product extends Model{
         this.description = description;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
+
+    public int getMaxPrice() {return maxPrice; }
+
+    public void setMaxPrice(int maxPrice) { this.maxPrice = maxPrice; }
 
     public String getSeller() {
         return seller;

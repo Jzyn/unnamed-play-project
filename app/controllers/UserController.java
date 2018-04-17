@@ -129,23 +129,23 @@ public class UserController extends Controller {
 
             // Create a form based on the Room class and fill using r
             bidForm = formFactory.form(Product.class).fill(p);
-            if(p.getPrice() < 160)
+            if(p.getPrice() < p.getMaxPrice())
             {
                 p.setPrice(p.getPrice() + 5);
                 p.setLatestBidder(u.getEmail());
                 p.update();
             }
-            else if (p.getPrice() == 160 && p.getLatestBidder() == u.getEmail())
+            else if (p.getPrice() == p.getMaxPrice() && p.getLatestBidder() == u.getEmail())
             {
                     flash("success", "congrats " +p.getLatestBidder() +"! You have won the bid!");
             }
-            else if (p.getPrice() == 160 && p.getLatestBidder() != u.getEmail())
+            else if (p.getPrice() == p.getMaxPrice() && p.getLatestBidder() != u.getEmail())
             {
                 flash("unfortunate", "This bid has ended");
             }
             else
                 {
-                    flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
+                    flash("unfortunate", "Uh Oh looks like something went wrong press back to get out of here.");
             return redirect(routes.HomeController.productInfo(p.getId()));
 
             }

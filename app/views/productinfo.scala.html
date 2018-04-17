@@ -10,6 +10,21 @@
     @if(flash.containsKey("success")) {
     <div class="alert alert-success">
         @flash.get("success")
+        <div class="text-right">
+        <form action="/" method="GET">
+                <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_h0fpm1RYECu3Ai5dz8QXDoDX"
+                        data-amount="@selectedProduct.getMaxPrice()"
+                        data-name="APortal"
+                        data-description="Widget"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto"
+                        data-zip-code="true"
+                        data-currency="eur">
+                </script>
+        </div>
+        </form>
     </div>
     }
 

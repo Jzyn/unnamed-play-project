@@ -16,8 +16,12 @@
     <textarea row="5" name="description" class="form-control"></textarea>
 
 <div class="form-group">
-    @inputText(listProductForm("price"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: €40")
+    @inputText(listProductForm("price"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"This will be your starting price")
 </div>
+
+    <div class="form-group">
+        @inputText(listProductForm("maxPrice"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"This will be the most you are going to sell for")
+    </div>
 
     <!-- cat select -->
     @for((value,name) <- Category.options) {
