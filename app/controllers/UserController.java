@@ -79,7 +79,6 @@ public class UserController extends Controller {
 
     @Transactional
     public Result productSubmit() {
-        String saveImageMsg;
 
 
         try {
@@ -103,11 +102,8 @@ public class UserController extends Controller {
                 p.update();
             }
 
-            Http.MultipartFormData<File> body = request().body().asMultipartFormData();
-            Http.MultipartFormData.FilePart<File> image = body.getFile("picture");
 
             // Save the image file
-            saveImageMsg = saveFile(p.getId(), image);
 
             // Set a success message in temporary flash
             // for display in return view
@@ -150,28 +146,6 @@ return redirect(routes.HomeController.productInfo(p.getId()));
        
     }
 
-@Transactional
-    public String saveFile(Long id, FilePart image){
-        if (image != null) {
-            String mimeType = image.getContentType();
-            if (mimeType.startsWith("image/")) {
-                File file = (File) image.getFile();
-                ConvertCmd cmd = new ConvertCmd();
-                IMOperation op = new IMOperation();
-                op.addImage(file.getAbsolutePath());
-                op.resize(300, 200);
-                op.addImage("public/images/productImages/" + id +".jpg");
-                try{
-                    cmd.run(op);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return " and image saved";
-            }
-        }
-        return "image file missing";
-    }
 
 }
 

@@ -8,49 +8,50 @@
 @main("Profile", user) {
 <!-- SOC -->
 
-<div class="under-logo">
     <div class="col-sm-2">
      <img src="https://picsum.photos/250" class="rounded float-left" alt="A generic square placeholder image with rounded corners in a figure."><p>@user.getUsername() | <a href="@controllers.security.routes.LoginController.logout()"> Logout </a></p>
-    </div>
-</div>
-
-<div class="container">
-<h4 class="blockquote text-center"> Your Account Details </h4>
-    <div class="blockquote text-center">
-
+        <h4 class="blockquote text-left"> Your Account Details </h4>
         @helper.form(action = routes.UserController.editProfileSubmit(), 'role-> "form") {
 
         <form>
             <div class="form-row">
                 <div class="form-group col-md-12">
-                       <label id="FormLabel">Username</label><br>
-    		     <input type="text" name="username" value="@user.getUsername()">
+                <h5>Email</h5>
+                <input type="text" name="username" value="@user.getEmail()" readonly>
                 </div>
+
                 <div class="form-group col-md-12">
-                       <label id="FormLabel">Address Line 1</label><br>
-    		     <input type="text" name="address1" value="@user.getAddress1()">
+                <label id="FormLabel">Name</label><br>
+                <input type="text" name="username" value="@user.getName()" readonly>
                 </div>
+
                 <div class="form-group col-md-12">
-                       <label id="FormLabel">Address Line 2</label><br>
-    		      <input type="text" name="address2" value="@user.getAddress2()">
+                <label id="FormLabel">Username</label><br>
+                <input type="text" name="username" value="@user.getUsername()" readonly>
                 </div>
+
                 <div class="form-group col-md-12">
-                       <label id="FormLabel">City</label><br>
-    		     <input type="text" name="city" value="@user.getCity()">
+                <label id="FormLabel">Address Line 1</label><br>
+                <input type="text" name="address1" value="@user.getAddress1()" readonly>
                 </div>
-                <input type="submit" class="form-group col-md-12" value="Save Changes">
+
+                <div class="form-group col-md-12">
+                <label id="FormLabel">Address Line 2</label><br>
+                <input type="text" name="address2" value="@user.getAddress2()" readonly>
+                </div>
+
+                <div class="form-group col-md-12">
+                <label id="FormLabel">City</label><br>
+                <input type="text" name="city" value="@user.getCity()" readonly>
+                </div>
+                <!--   <input type="submit" class="form-group col-md-12" value="Save Changes"> -->
             </div>
         </form>
 
         }
-
     </div>
-</div>
 
 
 
-
-
-
-<!-- EOC -->
 }
+

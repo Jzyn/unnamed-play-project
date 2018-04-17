@@ -41,6 +41,9 @@
              <!-- This Line -->               <a class="nav-link" href="@routes.UserController.profile()">@user.getName | Logout </a>
                       }else{
              <!-- And this Line -->              <a class="nav-link" href="@controllers.security.routes.LoginController.login()">Login </a>
+             <li class="nav-item">
+             <a class="nav-link" href="@routes.HomeController.signUp()"> Register </a>
+             </li>
                            }
   </li>
 
@@ -48,6 +51,9 @@
     </nav>
 
     @content
+
+    <footer>
+    </footer>
 
     </body>
         <!-- Load JavaScript libs last -->

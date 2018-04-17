@@ -3,10 +3,23 @@
 <!-- Pass page title and content {html between braces} to the main view -->
 @main("Products", user) {
   <!-- HTML content for the index view -->
-<div class="under-logo">
   <div class="col-sm-2">
       <!---Optional Navigation Bar--->
       <h4 id="TextAlignCenter">Product Category</h4>
+
+	  <form  action="@routes.HomeController.products(0)" method="get" class="form-wrapper cf">
+
+		  <div class="flexContainer">
+			  <input type="search" id="searchbox" name="filter" class="inputField" placeholder="Search">
+
+
+			  <button type="submit" class="btn btn-link" id="search">
+				  <i class="fa fa-search" aria-hidden="true"></i>
+			  </button>
+
+		  </div>
+	  </form>
+	  <hr>
          <ul class="nav nav-pills nav-stacked">
 		<li id="TextAlignCenter"><a href="@routes.HomeController.products(0)">All</a></li>
          	@for(cat <-categories) {
@@ -16,36 +29,6 @@
             	 }
          </ul>
   </div>
-</div>
-  <div class="col-sm-8">
-			    <!---Start of Search Bar Form--->
-			<div class="row">
-
-				<div class="col-sm-4">
-
-				</div>
-				<div class="col-sm-4" id="SearchBar">
-					<!---Search Bar Form--->
-					<div class="col-sm-12">
-					
-						<form class="navbar-form" action="@routes.HomeController.products(catId)" method="GET">
-							<div class="input-group" >
-								<input type="search" name="filter"  class="form-control" placeholder="Search">
-								
-								<div class="input-group-btn">
-									<button type="submit" class="btn btn-default" id="textDarkBrown">
-										<i class="glyphicon glyphicon-search">
-										</i>
-									</button>
-								</div>
-							</div>
-						</form>
-						</div>
-					 
-					</div>
-				<div class="col-sm-4">
-				</div>
-			</div>
 
 
 			    <!---End of Search Bar Form--->
@@ -54,11 +37,9 @@
 
 
 
-          <!--Products page-->
-      <br>
+          <!--Products -->
 
 	  <div class="container">
-		  <hr>
       @for(prod <- products) {
       <div class="panel panel-default">
 		<div class="panel-heading" id="mediaTitleBanner">
@@ -76,14 +57,14 @@
 			      <div class="col-sm-12">
 					<h3 class="page-header TextAlignCenter">About Product</h3>
 					<p class="BreakWord">@prod.getDescription()</p>
-					
+
 			      </div>
 				<div class="col-sm-12">
 					<h3 >Seller : </h3>
 					<p class="BreakWord">@prod.getSeller()</p>
 
 				</div>
-			<!---End of Row---> 	
+			<!---End of Row--->
 			</div>
 			<!--more product info goes here-->
 				<a href="@routes.HomeController.productInfo(prod.getId)" class="btn" id="Buttons">Read More</a>
@@ -91,7 +72,7 @@
      	 </div>
       }
 	  </div>
-     
+
       	<br>
       	<br>
   </div>
