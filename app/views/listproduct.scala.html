@@ -8,36 +8,29 @@
     @helper.form(action = routes.UserController.productSubmit(), 'role-> "form") {
 <form>
 
-<input type='file' onchange="readURL(this);" />
-    <img id="blah" src="#" alt="your image" />
 
 <div class="form-group">
-    @inputText(listProductForm("title"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: Unopened original Avengers Comic")
+    @inputText(listProductForm("title"),  '_showConstraints -> false, 'class -> "form-control", 'label -> "Email Address",  'placeholder ->"e.g: Unopened original Avengers Comic")
 </div>
 
     <label id="FormLabel">Description</label>
     <textarea row="5" name="description" class="form-control"></textarea>
 
 <div class="form-group">
-    @inputText(listProductForm("price"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"This will be your starting price")
+    @inputText(listProductForm("price"), '_showConstraints -> false, 'class -> "form-control", 'label -> "Email Address",  'placeholder ->"This will be your starting price")
 </div>
 
     <div class="form-group">
-        @inputText(listProductForm("maxPrice"),  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"This will be the most you are going to sell for")
+        @inputText(listProductForm("maxPrice"), '_showConstraints -> false,  'class -> "form-control", 'label -> "Email Address",  'placeholder ->"This will be the most you are going to sell for")
     </div>
 
-    <!-- cat select -->
-    @for((value,name) <- Category.options) {
-    <br>
-    <label id="FormLabel">@name</label>
-    <input type="checkbox" name="catSelect[]" value="@value"
-           @if(listProductForm("id").value != null) {
-    @if(Category.inCategory(value.toLong,listProductForm("id").value.toLong)) {
-    checked
-    }
-    }
-    />
-    }
+    @select(
+    listProductForm("category.id"),
+    options(Category.options),
+    '_label -> "Category", '_default -> "-- Choose a category --",
+    '_showConstraints -> false, 'class -> "form-control"
+    )
+
 
     @inputText(listProductForm("id"), '_label -> "", 'hidden -> "hidden")
 

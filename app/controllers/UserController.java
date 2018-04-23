@@ -73,12 +73,12 @@ public class UserController extends Controller {
                 return badRequest("error");
         }
 
-        return ok(profile.render(getUserFromSession(), editDetailsForm));
+        return ok(profile.render(getUserFromSession(), editDetailsForm, u.getMyProducts()));
     }
 
     public Result profile() {
-        Form<User> userDetailsForm = formFactory.form(User.class);
-        return ok(profile.render(getUserFromSession(),userDetailsForm));
+        Form<User> userDetailsForm = formFactory.form(User.class).fill(getUserFromSession());
+        return ok(profile.render(getUserFromSession(),userDetailsForm,getUserFromSession().getMyProducts()));
 
 
         // Render the Add Room View, passing the form object
@@ -94,13 +94,13 @@ public class UserController extends Controller {
 	Form<User> userDetailsForm = formFactory.form(User.class).bindFromRequest();
 	 if (userDetailsForm.hasErrors()) {
                 // If errors, show the form again
-                return badRequest(profile.render(getUserFromSession(), userDetailsForm));
+                return badRequest(profile.render(getUserFromSession(), userDetailsForm, getUserFromSession().getMyProducts()));
 	 }
 	        User u = userDetailsForm.get();
                 u.setRole("user");
 		u.update();
 
-                return redirect(controllers.routes.HomeController.index());
+                return redirect(controllers.routes.UserController.profile());
             }
 
     @Transactional
@@ -121,14 +121,14 @@ public class UserController extends Controller {
 
             if (p.getId() == null) {
                 // Save to the database via Ebean0.0 (remember Product extends Model)
-                p.setSeller(getUserFromSession().getUsername());
+                p.setSeller(getUserFromSession());
                 p.save();
             }
             // Product already exists so update
             else if (p.getId() != null) {
                 p.update();
             }
-
+            getUserFromSession().myproducts.add(p);
 
             // Save the image file
             // Set a success message in temporary flash
@@ -165,7 +165,7 @@ public class UserController extends Controller {
             }
             else if (p.getPrice() == p.getMaxPrice() && p.getLatestBidder() != u.getEmail())
             {
-                flash("unfortunate", "This bid has ended");
+                flash("success", "This bid has ended");
             }
             else
                 {
@@ -182,6 +182,50 @@ public class UserController extends Controller {
 
        
     }
+
+    public Result viewWatchList()
+    {
+        return ok(watchedItems.render(getUserFromSession(),getUserFromSession().getWatchedItems()));
+    }
+
+    @Transactional
+    public Result addToWatch(Long id)
+    {
+        try {
+            Product p = Product.find.byId(id);
+            p.liked.add(getUserFromSession());
+            getUserFromSession().watchedItems.add(p);
+            p.save();
+            getUserFromSession().save();
+
+
+        return redirect(routes.HomeController.products(0, ""));
+        } catch (Exception ex) {
+            flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
+            return redirect(routes.HomeController.index());
+        }
+    }
+
+    @Transactional
+    public Result removeFromWatch(Long id)
+    {
+        try {
+        Product p = Product.find.byId(id);
+        p.liked.remove(getUserFromSession());
+        getUserFromSession().watchedItems.remove(p);
+
+        p.update();
+        getUserFromSession().update();
+
+        return redirect(routes.UserController.viewWatchList());
+        } catch (Exception ex) {
+            flash("exception", "Uh Oh looks like something went wrong press back to get out of here.");
+            return redirect(routes.HomeController.index());
+        }
+    }
+
+
+
 
 
 }

@@ -1,7 +1,6 @@
 package controllers;
 
 import controllers.security.*;
-import play.api.Environment;
 import play.mvc.*;
 import play.data.*;
 
@@ -23,19 +22,17 @@ import models.*;
  */
 public class HomeController extends Controller {
 
-    
-    private Environment env;
+
 
 
     // Declare a private FormFactory instance
     private FormFactory formFactory;
 
     //  Inject an instance of FormFactory it into the controller via its constructor
-    @Inject
 
-    public HomeController(Environment e, FormFactory f) {
+    @Inject
+    public HomeController(FormFactory f) {
         this.formFactory = f;
-        this.env = e;
 	}
 
     private User getUserFromSession(){
@@ -86,10 +83,11 @@ public class HomeController extends Controller {
 
 
 	public Result products(Long catId,String filter) {
-
+        try
+        {
     	    // Get list of all categories in ascending order
      	   List<Category> categoriesList = Category.findAll();
-     	   List<Product> productsList = new ArrayList<Product>();
+     	   List<Product> productsList;
 	
       		  if (catId == 0) {
      	   	    // Get list of all categories in ascending order
@@ -101,7 +99,12 @@ public class HomeController extends Controller {
       	  	    productsList = Product.findFilter(catId,filter);
      	  	 }
 
-      	  return ok(products.render(catId,filter,productsList, categoriesList, getUserFromSession(), env));
+      	  return ok(products.render(catId,filter,productsList, categoriesList, getUserFromSession()));
+        } catch(Exception ex)
+        {
+            flash("exception","Uh Oh Something unexpected happened");
+            return redirect(routes.HomeController.index());
+        }
    	 }
 
     public Result productInfo(Long prodId)
@@ -112,7 +115,8 @@ public class HomeController extends Controller {
             Form<Product> listProductForm = formFactory.form(Product.class).bindFromRequest();
             Product selectedProd = Product.find.byId(prodId);
             User currentUser = getUserFromSession();
-            return ok(productinfo.render(listProductForm,selectedProd,currentUser, env));
+
+            return ok(productinfo.render(listProductForm,selectedProd,currentUser));
         } catch(Exception ex)
         {
             flash("exception","Uh Oh Something unexpected happened");

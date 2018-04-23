@@ -21,33 +21,46 @@
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
     </head>
-    <body>
+    <body style="background:#dee2e6;">
             <!-- start of nav section -->
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-dark bg-dark">
             <!-- nav header/ branding -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="index"> <img src="@routes.Assets.versioned("images/logo-placeholder.png")" width="250" height="100"> </a>
+                <a class="navbar-brand" href="@routes.AdminController.index()"> <img id="logo" src="@routes.Assets.versioned("images/logo.png")" height="75px">  </a>
             </div>
             <!-- List containing nav links -->
           <ul class="nav justify-content-end">
   <li class="nav-item">
-    <a class="nav-link active" href="@routes.UserController.listProduct()">Sell</a>
+    <a class="nav-link active" style="color:#FF6600; font-size:15px;" href="@routes.AdminController.vProducts()">Product DB</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Message Boards</a>
+    <li class="nav-item">
+    <a class="nav-link active" style="color:#FF6600; font-size:15px;" href="@routes.AdminController.vUsers()">User DB</a>
   </li>
-  <li class="nav-item">
+
      @if(user != null){
-             <!-- This Line -->               <a class="nav-link" href="@routes.UserController.profile()">@user.getName | Logout </a>
+             <!-- This Line -->                        <!-- Example Dropdown menu (# links point to this page) -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="color:#FF6600;" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@user.getName</a>
+            <div class="dropdown-menu text-left" aria-labelledby="dropdown01">
+              <a class="dropdown-item" style="color:#FF6600;" href="@controllers.security.routes.LoginController.logout()">Logout</a>
+            </div>
+          </li>
                       }else{
-             <!-- And this Line -->              <a class="nav-link" href="@controllers.security.routes.LoginController.login()">Login </a>
+                      <li class="nav-item">
+             <!-- And this Line -->              <a class="nav-link" style="color:#FF6600; font-size:15px;" href="@controllers.security.routes.LoginController.login()">Login </a>
+             </li>
+             <li class="nav-item">
+             <a class="nav-link"  style="color:#FF6600; font-size:15px;" href="@routes.HomeController.signUp()"> Register </a>
+             </li>
                            }
-  </li>
+
 
 </ul>
     </nav>
-
+<br>
+<br>
     @content
+
 
     </body>
         <!-- Load JavaScript libs last -->

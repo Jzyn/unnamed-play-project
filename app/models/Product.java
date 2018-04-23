@@ -22,14 +22,20 @@ public class Product extends Model{
     private String title;
 
     //Adds a category type i.e. book, action figure etc..
-    @ManyToMany(cascade= CascadeType.ALL, mappedBy = "products")
-    private List<Category> category = new ArrayList<Category>();
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name="category")
+    private Category category;
 
     //Adds function for products to be sorted using a filter.
-    @Constraints.Required
     private List<Long> catSelect = new ArrayList<Long>();
 
-    private String seller;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="useremail", nullable = false)
+    private User seller;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    public List<User> liked;
+
     private String latestBidder;
 
     @Column(columnDefinition="VARCHAR2(1000)")
@@ -42,6 +48,9 @@ public class Product extends Model{
     @Constraints.Required
     private int maxPrice;
 
+
+
+
     //@OneToMany(cascade = CascadeType.ALL)
     //List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
@@ -50,15 +59,17 @@ public class Product extends Model{
     }
 
     // Constructor to initialise object
-    public  Product(Long id, String title, List<Category> category, String seller, String latestBidder, String description, int price, int maxPrice) {
+    public  Product(Long id, String title, Category category, User seller, String latestBidder,String description, int price, int maxPrice, List<User> liked) {
         this.id = id;
         this.title = title;
-	this.category = category;
+	    this.category = category;
         this.seller = seller;
         this.latestBidder = latestBidder;
         this.description = description;
         this.price = price;
         this.maxPrice = maxPrice;
+        this.liked = liked;
+
     }
 
     //Generic query helper for entity Computer with id Long
@@ -118,11 +129,11 @@ public class Product extends Model{
 
     public void setMaxPrice(int maxPrice) { this.maxPrice = maxPrice; }
 
-    public String getSeller() {
+    public User getSeller() {
         return seller;
     }
 
-    public void setSeller(String seller) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 
@@ -131,7 +142,7 @@ public class Product extends Model{
     public void setLatestBidder(String latestBidder) {this.latestBidder = latestBidder; }
 
 	//needed for filtering searches and organizing results
-    public List getCategory() 
+    public Category getCategory()
     {
         return category;
     }
@@ -140,10 +151,11 @@ public class Product extends Model{
     {
 		return catSelect;
     }
-    public void setCategory(List<Category> category) 
+    public void setCategory(Category category)
     {
         this.category = category;
     }
+
     /*public List getOrderItems()
     {
 		return orderItems;
@@ -156,17 +168,6 @@ public class Product extends Model{
 
     //Misc
     //Used for printing Categories due to the fact if you do it in html causes issues.
-    public String printCatList() 
-    {
-		String categories = "";
-		for(Category cat: category)
-		{
-	 
-		 categories+= "/"+cat.getFilter();
-	 
-		}
-		return categories+".";
-    }
 
 
 

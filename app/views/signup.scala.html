@@ -5,33 +5,34 @@
 @main("Sign up", user) {
 @helper.form(action = routes.HomeController.signupSubmit(), 'role-> "form") {
 
+<div class="container">
 <form>
     <div class="form-row">
         <div class="form-group col-md-6">
-             @inputText(signUpForm("email"),  'class -> "form-control", 'label -> "Email Address")
+             @inputText(signUpForm("email"), '_showConstraints -> false,  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-   	     @inputPassword(signUpForm("password"),  'class -> "form-control", 'label -> "Email Address")
+   	     @inputPassword(signUpForm("password"), '_showConstraints -> false, 'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-  	     @inputText(signUpForm("name"),  'class -> "form-control", 'label -> "Email Address")
+  	     @inputText(signUpForm("name"), '_showConstraints -> false, 'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-            @inputText(signUpForm("username"),  'class -> "form-control", 'label -> "Email Address")
+            @inputText(signUpForm("username"),'_showConstraints -> false,  'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
-  	     @inputText(signUpForm("address1"),  'class -> "form-control", 'label -> "Email Address")
+  	     @inputText(signUpForm("address1"), '_showConstraints -> false, 'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-6">
- 	     @inputText(signUpForm("address2"),  'class -> "form-control", 'label -> "Email Address")
+ 	     @inputText(signUpForm("address2"), '_showConstraints -> false, 'class -> "form-control", 'label -> "Email Address")
         </div>
         <div class="form-group col-md-12">
-             @inputText(signUpForm("city"),  'class -> "form-control", 'label -> "Email Address")
+             @inputText(signUpForm("city"),'_showConstraints -> false,  'class -> "form-control", 'label -> "Email Address")
         </div>
                        <input type="submit" class="btn btn-primary" value="Create">
      </div>
 </form>
-
+</div>
 	}
 
 }

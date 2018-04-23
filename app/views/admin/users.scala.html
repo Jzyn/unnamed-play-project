@@ -17,6 +17,7 @@
                 <th>Address</th>
                 <th>Address 2</th>
                 <th>City</th>
+                <th>Ban User </th>
 
             </tr>
             </thead>
@@ -35,7 +36,7 @@
                 <td>
                     <a href="@routes.AdminController.deleteUser(u.getEmail)"
                        onclick="return confirmDel();">
-                       <button>  <i class="far fa-trash-alt"></i> </button>
+                       <button>  <i class="fa fa-ban" aria-hidden="true"></i> </button>
                     </a>
                 </td>
             </tr>

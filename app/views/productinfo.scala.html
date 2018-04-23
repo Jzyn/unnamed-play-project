@@ -1,4 +1,4 @@
-@(listProductForm: Form[models.Product], selectedProduct: models.Product, user : models.users.User, env : play.api.Environment)
+@(listProductForm: Form[models.Product], selectedProduct: models.Product, user : models.users.User)
 @import helper._
 
 @main("Product Info",user) {
@@ -11,7 +11,7 @@
     <div class="alert alert-success">
         @flash.get("success")
         <div class="text-right">
-        <form action="/" method="GET">
+            <form action="/" method="GET">
                 <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key="pk_test_h0fpm1RYECu3Ai5dz8QXDoDX"
@@ -23,8 +23,9 @@
                         data-zip-code="true"
                         data-currency="eur">
                 </script>
-        </div>
         </form>
+        </div>
+
     </div>
     }
 
@@ -33,37 +34,52 @@
         @flash.get("unfortunate")
     </div>
     }
-        <h3>@selectedProduct.getTitle()</h3>
-   
-
-                <pre id="FloatLeft"><span id="textLightRed">PRICE :</span> @selectedProduct.getPrice() | <span id="textLightRed">Current Max Bidder :</span> @selectedProduct.getSeller() </pre>
-		
-                @helper.form(action = routes.UserController.bidSubmit(selectedProduct.getId())) {
-                <form>
-                    <button type="submit" class="btn btn-light" id="search">
-                     Up the Ante by €5 
-		    </button>
-                </form>
-                }
-
-                @if(env.resource("public/images/productImages/"+selectedProduct.getId()+".jpg").isDefined) {
-                <img src="/assets/images/productImages/@(selectedProduct.getId() +".jpg")" class="img-responsive img-rounded" alt="Image of Product/Manga/Anime.">
-                } else {
-                <img src="/assets/images/productImages/thumbnails/noImage.png" class="img-responsive"/>
-                }
-            </div>
-
-
-
-           
-
-
-                <h4 class="page-header TextAlignCenter">About Product</h4>
-                <p class="BreakWord">@selectedProduct.getDescription()</p>
-                <pre id="FloatLeft"><span id="textLightRed">CATEGORY : </span>@selectedProduct.printCatList()</pre>
-
-
 </div>
+
+
+    <div class="container" id="product-section">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://picsum.photos/500">
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                       <h1>  @selectedProduct.getTitle </h1>
+                    </div>
+                </div> <!-- end row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="label label-primary"> @if(selectedProduct.getCategory().getFilter() != "Does not apply"){@selectedProduct.getCategory().getFilter()}</span>
+                    </div>
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="description">
+                            @selectedProduct.getDescription()
+                        </p>
+                    </div>
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col-md-2 bottom-rule">
+                        <h2 class="product-price">@selectedProduct.getPrice()</h2>
+                    </div>
+
+                    <div class="col-md-2">
+                        @helper.form(action = routes.UserController.bidSubmit(selectedProduct.getId())) {
+
+                        <button type="submit" class="btn btn-lg btn-brand btn-full-width">
+                            Add €5
+                        </button>
+                        }
+                    </div>
+                </div><!-- end row -->
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+
+
+
 
 
 

@@ -11,12 +11,12 @@
         <thead>
         <!-- The header row-->
         <tr>
-            <th>Thumbnail</th>
             <th>Item Name</th>
             <th>Description</th>
             <th>Category</th>
             <th>Price</th>
             <th>Seller</th>
+            <th>Remove Product</th>
 
 
         </tr>
@@ -31,14 +31,14 @@
                 }</td>
             <td>@p.getTitle</td>
             <td>@p.getDescription</td>
-            <td>@p.printCatList</td>
+            <td>@p.getCategory().getFilter</td>
             <td>@p.getPrice</td>
-            <td>@p.getSeller</td>
+            <td>@p.getSeller().getName</td>
             <!-- Delete product button -->
             <td>
                 <a href="@routes.AdminController.deleteProduct(p.getId)"
                    onclick="return confirmDel();">
-                    <button>  <i class="far fa-trash-alt"></i> </button>
+                    <button>  <i class="fa fa-trash" aria-hidden="true"></i> </button>
                 </a>
             </td>
         </tr>

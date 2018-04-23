@@ -1,34 +1,34 @@
-@(catId: Long,filter: String,products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment)
+@(catId: Long,filter: String,products: List[models.Product], categories: List[models.Category], user: models.users.User)
 
 <!-- Pass page title and content {html between braces} to the main view -->
 @main("Products", user) {
   <!-- HTML content for the index view -->
-  <div class="col-sm-2">
-      <!---Optional Navigation Bar--->
-      <h4 id="TextAlignCenter">Product Category</h4>
+<div style="margin:15px;">
+  <div class="row">
 
+  <div class="col-md-2">
+      <!---Optional Navigation Bar--->
+      <h4 class="monospaced" style="text-align:center">Product Category</h4>
+  </div>
+  </div> <!-- end of row -->
+  <div class="row">
+	  <div class="col-md-2"
 	  <form  action="@routes.HomeController.products(0)" method="get" class="form-wrapper cf">
 
 		  <div class="flexContainer">
 			  <input type="search" id="searchbox" name="filter" class="inputField" placeholder="Search">
 
 
-			  <button type="submit" class="btn btn-link" id="search">
-				  <i class="fa fa-search" aria-hidden="true"></i>
+			  <button  type="submit" class="btn btn-link bg-dark" id="search">
+				  <i class="fa fa-search " style="color:#FF6600;" aria-hidden="true"></i>
 			  </button>
 
 		  </div>
 	  </form>
-	  <hr>
-         <ul class="nav nav-pills nav-stacked">
-		<li id="TextAlignCenter"><a href="@routes.HomeController.products(0)">All</a></li>
-         	@for(cat <-categories) {
-			<hr>
-               		 <li id="TextAlignCenter"><a id="OptionalSecondaryNavbar" href="@routes.HomeController.products(cat.getId)">@cat.getFilter()</a></li>
-					 
-            	 }
-         </ul>
   </div>
+</div> <!-- end of row -->
+
+</div>
 
 
 			    <!---End of Search Bar Form--->
@@ -39,45 +39,61 @@
 
           <!--Products -->
 
-	  <div class="container">
-      @for(prod <- products) {
-      <div class="panel panel-default">
-		<div class="panel-heading" id="mediaTitleBanner">
-			<h2>@prod.getTitle()</h2>
-		</div>
-      		<div class="panel-body" id="mediaBorder">
-			<div class="row">
-		              <div class="col-sm-2">
-						  @if(env.resource("public/images/productImages/"+prod.getId()+".jpg").isDefined) {
-				               		   <img src="/assets/images/productImages/@(prod.getId + ".jpg")" class="img-responsive img-rounded"; width="250px"; height="300px"; alt="Image of Product.">
-						  } else {
-							   <img src="/assets/images/productImages/thumbnails/noImage.png" class="img-responsive"/>
-						  }
-			      </div>
-			      <div class="col-sm-12">
-					<h3 class="page-header TextAlignCenter">About Product</h3>
-					<p class="BreakWord">@prod.getDescription()</p>
+	  <div style="padding-left:35%; padding-right:30%;">
+		  @for(p <- products) {
+		  <div class="single-product">
+		  <div class="row">
+			  <div class="col-md-6">
+			  <a href="@routes.HomeController.productInfo(p.getId)"> <img class="product-view-img" src="https://picsum.photos/250" height="250px"; width="250px";></a>
+			  </div>
+			  <div class="col-md-6">
+				  <div class="row">
+					  <div class="col-md-12">
+						 <p class="monospaced">  @if(p.liked.size() > 1){@p.liked.size() people are watching this <i class="fa fa-fire" aria-hidden="true"></i>} </p>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-md-12">
+						  <a href="@routes.HomeController.productInfo(p.getId)"> <h1>  @p.getTitle </h1> </a>
+					  </div>
+				  </div> <!-- end row -->
+				  <div class="row">
+					  <div class="col-md-12">
+						  <span class="monospaced"> @if(p.getCategory().getFilter() != "Does not apply"){@p.getCategory().getFilter()}</span>
+					  </div>
+				  </div><!-- end row -->
+				  <div class="row">
+					  <div class="col-md-12 bottom-rule">
+						  <h4 class="monospaced"> €@p.getPrice - €@p.getMaxPrice() </h4>
+					  </div>
+				  </div><!-- end row -->
+				  <div class="row">
+					  <div class="col-md-12">
+						<h4 class="monospaced"> Sold by : @p.getSeller().getName()</h4>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-md-12">
+						  <a href="@routes.UserController.addToWatch(p.getId)">
+							  <button class="btn btn-primary btn-sm"> Add to watch List </button>
+						  </a>
+					  </div>
+				  </div>
+		  </div><!-- end row -->
+		  </div>
 
-			      </div>
-				<div class="col-sm-12">
-					<h3 >Seller : </h3>
-					<p class="BreakWord">@prod.getSeller()</p>
+		  <br>
+		  <hr>
+	  <br>
+				} <!-- end product -->
 
-				</div>
-			<!---End of Row--->
-			</div>
-			<!--more product info goes here-->
-				<a href="@routes.HomeController.productInfo(prod.getId)" class="btn" id="Buttons">Read More</a>
-		</div>
-     	 </div>
-      }
 	  </div>
 
-      	<br>
-      	<br>
-  </div>
-  <div class="col-sm-2">
 
-  </div>
-  <!-- End of content for main -->
-}
+		  }
+
+
+
+
+
+

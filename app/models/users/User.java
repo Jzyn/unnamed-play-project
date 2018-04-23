@@ -4,6 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.avaje.ebean.*;
+import models.Product;
 import play.data.format.*;
 import play.data.validation.*;
 import play.Logger;
@@ -29,7 +30,6 @@ public class User extends Model {
     @Column(updatable=false)
     private String name;
 
-    @Constraints.Required
     private String username;
 
     @Constraints.Required
@@ -45,13 +45,19 @@ public class User extends Model {
 
     private String city;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seller")
+    public List<Product> myproducts;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "liked")
+    public List<Product> watchedItems;
+
     public User()
     {
 
     }
     //Overloaded Constructors
 
-    public User(String email,String name, String username, String password,String role, String address1, String address2, String city)
+    public User(String email,String name, String username, String password,String role, String address1, String address2, String city, List<Product> myproducts, List<Product> watchedItems)
 
     {
 
@@ -62,8 +68,10 @@ public class User extends Model {
         this.password = password;
         this.address1 = address1;
         this.address2 = address2;
-	this.city = city;
+	    this.city = city;
         this.password = password;
+        this.myproducts = myproducts;
+        this.watchedItems = watchedItems;
     }
 
     //Generic query helper for entity User with unique id String
@@ -122,6 +130,14 @@ public class User extends Model {
     {
 	return city;
     }
+    public List<Product> getMyProducts() {
+        return myproducts;
+    }
+
+    public List<Product> getWatchedItems() {
+        return watchedItems;
+    }
+
 
     public void setEmail(String email)
     {
@@ -155,4 +171,8 @@ public class User extends Model {
     {
 	this.city = city;
     }
+    public void setMyProducts(List<Product> myproducts) {
+        this.myproducts = myproducts;
+    }
+
 }

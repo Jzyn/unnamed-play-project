@@ -18,10 +18,8 @@ public class Category extends Model {
     @Constraints.Required
     private String filter;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;
-
-
 
 
     // Default constructor
@@ -56,7 +54,7 @@ public class Category extends Model {
         }
         return options;
     }
-   
+
 
     public static Boolean inCategory(Long cat,Long prod)
     {
@@ -86,6 +84,8 @@ public class Category extends Model {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+
 
 
     //Misc

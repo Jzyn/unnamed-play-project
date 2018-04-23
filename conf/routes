@@ -6,7 +6,7 @@
 GET     /                           controllers.HomeController.index
 GET     /profile                    controllers.UserController.profile
 GET     /products                   controllers.HomeController.products(cat:Long ?=0L,filter?="")
-GET	    /productInfo	            controllers.HomeController.productInfo(prodID:Long ?=0L)
+GET	    /productInfo	            controllers.HomeController.productInfo(prodID: Long)
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -38,4 +38,8 @@ GET     /admin/index                      controllers.AdminController.index()
 GET     /user/listproduct                   controllers.UserController.listProduct
 POST    /user/productSubmit                 controllers.UserController.productSubmit
 
-POST   /user/bid                            controllers.UserController.bidSubmit(prodID:Long ?=0L)
+POST   /user/bid                            controllers.UserController.bidSubmit(prodID : Long)
+
+GET    /user/remove/:id                     controllers.UserController.removeFromWatch(id : Long)
+GET    /user/add/:id                        controllers.UserController.addToWatch(id : Long)
+GET    /user/watch                          controllers.UserController.viewWatchList

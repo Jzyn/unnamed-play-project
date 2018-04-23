@@ -1,5 +1,5 @@
 @import helper._
-@(user: models.users.User, editDetailsForm: Form[models.users.User])
+@(user: models.users.User, editDetailsForm: Form[models.users.User], products: List[models.Product])
 @*
  * Call the `main` template with two arguments. The first
  * argument is a `String` with the title of the page, the second
@@ -7,21 +7,20 @@
  *@
 @main("Profile", user) {
 <!-- SOC -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+             <figure class="text-center">
+                 <img src="https://picsum.photos/250" alt="A generic square placeholder image with rounded corners in a figure.">
+                     <figcaption>
+                         <h4 class="text-center"> @user.getName() | <a href="@controllers.security.routes.LoginController.logout()"> Logout </a> </h4>
+                     </figcaption>
+             </figure>
 
-    <div class="col-sm-2">
-     <img src="https://picsum.photos/250" class="rounded float-left" alt="A generic square placeholder image with rounded corners in a figure."><p>@user.getUsername() | <a href="@controllers.security.routes.LoginController.logout()"> Logout </a></p>
-        <h4 class="blockquote text-left"> Your Account Details </h4>
-<p>@user.getUsername()</p>
-
-
-
-        @helper.form(action = routes.UserController.editProfileSubmit(), 'role-> "form") {
-
-        <form>
-            <div class="form-row">
+            @helper.form(action = routes.UserController.editProfileSubmit(), 'role-> "form") {
 
                 <div class="form-group col-md-12">
-                @inputText(editDetailsForm("username"), 'class -> "form-control")
+                @inputText(editDetailsForm("username"), 'class -> "form-control", '_showConstraints -> false)
                 </div>
 
                 <div class="form-group col-md-12">
@@ -35,21 +34,49 @@
                 <div class="form-group col-md-12">
                  @inputText(editDetailsForm("city"), 'class -> "form-control")
                 </div>
-              
-                 <input type="submit" class="form-group col-md-12" value="Save Changes">
-                 @inputText(editDetailsForm("email"), '_label -> "", 'hidden -> "hidden")
-		 @inputText(editDetailsForm("password"), '_label -> "", 'hidden -> "hidden")
-		 @inputText(editDetailsForm("name"), '_label -> "", 'hidden -> "hidden")
-   </div>
+
+                 <input type="submit" class="btn btn-primary btn-sm btn-block col-md-12" value="Save Changes">
+                 @inputText(editDetailsForm("email"),'_showConstraints -> false, '_label -> "", 'hidden -> "hidden")
+		         @inputText(editDetailsForm("password"),'_showConstraints -> false, '_label -> "", 'hidden -> "hidden")
+		         @inputText(editDetailsForm("name"), '_showConstraints -> false, '_label -> "", 'hidden -> "hidden")
+        </div>
+
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center">Your Products</h3>
+                    <table class="table table-bordered table-hover table-condensed">
+                        <thead>
+                        <!-- The header row-->
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Product row(s) -->
+                        <!-- Start of For loop - For each p in products add a row -->
+                        @for(p <- user.getMyProducts()) {
+                        <tr>
+                            <td>@p.getTitle</td>
+                            <td>@p.getDescription</td>
+                            <td>@p.getCategory().getFilter</td>
+                            <td>@p.getPrice</td>
+                        </tr>
+                        } <!-- End of For loop -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </form>
+        </div>
+    </div>
 
-		
-
-        }
- 
-
+            }
+</div>
 
 
-}
+
+    }
 
