@@ -4,13 +4,14 @@
 # --- !Ups
 
 create table category (
-  id                            bigint auto_increment not null,
+  id                            bigint not null,
   filter                        varchar(255),
   constraint pk_category primary key (id)
 );
+create sequence category_seq;
 
 create table product (
-  id                            bigint auto_increment not null,
+  id                            bigint not null,
   title                         varchar(255),
   category                      bigint,
   useremail                     varchar(255) not null,
@@ -20,6 +21,7 @@ create table product (
   max_price                     integer,
   constraint pk_product primary key (id)
 );
+create sequence product_seq;
 
 create table product_user (
   product_id                    bigint not null,
@@ -54,21 +56,23 @@ create index ix_product_user_user on product_user (user_email);
 
 # --- !Downs
 
-alter table product drop foreign key fk_product_category;
-drop index ix_product_category on product;
+alter table product drop constraint if exists fk_product_category;
+drop index if exists ix_product_category;
 
-alter table product drop foreign key fk_product_useremail;
-drop index ix_product_useremail on product;
+alter table product drop constraint if exists fk_product_useremail;
+drop index if exists ix_product_useremail;
 
-alter table product_user drop foreign key fk_product_user_product;
-drop index ix_product_user_product on product_user;
+alter table product_user drop constraint if exists fk_product_user_product;
+drop index if exists ix_product_user_product;
 
-alter table product_user drop foreign key fk_product_user_user;
-drop index ix_product_user_user on product_user;
+alter table product_user drop constraint if exists fk_product_user_user;
+drop index if exists ix_product_user_user;
 
 drop table if exists category;
+drop sequence if exists category_seq;
 
 drop table if exists product;
+drop sequence if exists product_seq;
 
 drop table if exists product_user;
 
